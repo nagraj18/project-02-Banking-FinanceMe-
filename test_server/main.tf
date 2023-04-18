@@ -5,7 +5,7 @@ resource "aws_eip_association" "eip_assoc" {
 resource "aws_instance" "test-server" {
   ami           = "ami-0a7b02d693385f018" 
   instance_type = "t2.micro" 
-  key_name = "DEMOKEY"
+  key_name = "awsmobakey"
   vpc_security_group_ids= ["sg-08290b52fa64c3be6"]
   connection {
     type     = "ssh"
