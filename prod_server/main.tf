@@ -1,5 +1,5 @@
 resource "aws_instance" "prod_server" {
-  ami           = "ami-03a933af70fa97ad2" 
+  ami           = "ami-06fc49795bc410a0c" 
   instance_type = "t2.micro"
   key_name = "awsmobakey"
   vpc_security_group_ids= ["sg-08290b52fa64c3be6"]
@@ -21,7 +21,7 @@ resource "aws_instance" "prod_server" {
  }
  
  provisioner "local-exec" {
- command = "ansible-playbook /var/lib/jenkins/workspace/Banking and Finance Domain/prod_server/prod_bank_playbook.yml "
+ command = "ansible-playbook /var/lib/jenkins/workspace/BankingandFinanceDomain/prod_server/prod_bank_playbook.yml "
   } 
 }
 
