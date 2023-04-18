@@ -1,5 +1,5 @@
 resource "aws_instance" "prod_server" {
-  ami           = "ami-06fc49795bc410a0c" 
+  ami           = "ami-03a933af70fa97ad2" 
   instance_type = "t2.micro"
   key_name = "awsmobakey"
   vpc_security_group_ids= ["sg-08290b52fa64c3be6"]
