@@ -1,4 +1,4 @@
-resource "aws_instance" "prod_server" {
+resource "aws_instance" "prod-server" {
   ami           = "ami-06fc49795bc410a0c" 
   instance_type = "t2.micro"
   key_name = "awsmobakey"
