@@ -1,7 +1,3 @@
-provider "aws" {
- region = "ap-south-1"
-}
-
 resource "aws_eip_association" "eip_assoc" {
   instance_id   = aws_instance.test-server.id
   allocation_id = "eipalloc-0604226a57fe8b921"
