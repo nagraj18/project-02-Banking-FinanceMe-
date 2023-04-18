@@ -3,8 +3,8 @@
   become: true
   connection : ssh
   tasks : 
- - name: updating yum
-   command : sudo yum update -y 
+  - name: updating yum
+    command : sudo yum update
 
   - name : Install Docker
     command : sudo yum install  docker -y
