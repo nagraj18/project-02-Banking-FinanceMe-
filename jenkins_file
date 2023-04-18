@@ -1,0 +1,66 @@
+pipeline {
+    agent any
+
+    tools {
+        maven "MAVEN"
+    }
+
+    stages {
+        stage('Git checkout') {
+            steps {
+              
+                   git 'https://github.com/nagraj18/project-02-Banking-FinanceMe-.git'
+            
+                }
+            }
+        stage('maven build') {
+              steps {
+              
+                     sh "mvn install package"
+                }
+        }
+        stage('Publish HTML Report'){
+            steps{
+                publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: '/var/lib/jenkins/workspace/Banking and Finance Domain/target/surefire-reports', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: '', useWrapperFileDirectly: true])
+            }
+        }
+        stage('Docker build image') {
+              steps {
+                  
+                  sh ' docker system prune -af '
+                  sh ' docker build -t nagaraju18/banking_finance_domain:latest . '
+            }
+        }
+        stage('Docker login and push') {
+              steps {
+                  withCredentials([string(credentialsId: 'docker_secret', variable: 'docker')]) {
+                  sh ' docker login -u nagaraju18 -p ${docker} '
+                  sh ' docker push nagaraju18/banking_finance_domain:latest '
+                  }
+              }
+        }
+        stage (' configuring Test-server with terraform & ansible and deploying'){
+            steps{
+
+                dir('test_server'){
+                sh 'chmod 600 awsmobakey.pem'
+                sh 'terraform init'
+                sh 'terraform validate'
+                sh 'terraform apply --auto-approve'
+                }
+               
+            }
+        }
+        stage ('setting Prod-Server with terraform and ansible'){
+            steps{
+                dir('prod_server') {
+                sh 'chmod 600 awsmobakey.pem'
+                sh'terraform init'
+                sh'terraform validate'
+                sh'terraform apply --auto-approve'
+                 }
+            }
+        }
+    }
+}
+    
